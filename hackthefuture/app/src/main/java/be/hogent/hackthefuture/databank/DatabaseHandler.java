@@ -1,8 +1,12 @@
 package be.hogent.hackthefuture.databank;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import be.hogent.hackthefuture.domein.Photo;
+import be.hogent.hackthefuture.domein.Sample;
 
 /**
  * Created by Yannick on 8/12/2016.
@@ -71,5 +75,35 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // Create tables again
         onCreate(db);
+    }
+
+    public void addPhoto(Photo ph) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_PHOTOS_NAME, ph.getName());
+        values.put(KEY_PHOTOS_REMARK, ph.getRemark());
+        values.put(KEY_PHOTOS_VALUE, ph.getValue());
+        values.put(KEY_PHOTOS_DATETIME, ph.getDatetime());
+        values.put(KEY_PHOTOS_RESEARCHER, ph.getResearcher());
+
+        // Inserting Row
+        db.insert(TABLE_PHOTOS, null, values);
+        db.close(); // Closing database connection
+    }
+
+    public void addSample(Sample sam) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_SAMPLES_NAME, sam.getName());
+        values.put(KEY_SAMPLES_REMARK, sam.getRemark());
+        values.put(KEY_SAMPLES_VALUE, sam.getValue());
+        values.put(KEY_SAMPLES_DATETIME, sam.getDatetime());
+        values.put(KEY_SAMPLES_RESEARCHER, sam.getResearcher());
+
+        // Inserting Row
+        db.insert(TABLE_SAMPLES, null, values);
+        db.close(); // Closing database connection
     }
 }
