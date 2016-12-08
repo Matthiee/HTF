@@ -15,6 +15,7 @@ import java.util.List;
 
 import be.hogent.hackthefuture.R;
 import be.hogent.hackthefuture.databank.Connectie;
+import be.hogent.hackthefuture.databank.DatabaseHandler;
 import be.hogent.hackthefuture.databank.Service;
 import be.hogent.hackthefuture.domein.Photo;
 import be.hogent.hackthefuture.domein.PhotoAdapter;
@@ -26,7 +27,7 @@ public class PhotosFragmentAll extends Fragment implements Callback<List<Photo>>
 
     PhotoAdapter photoAdapter;
     List<Photo> photos;
-
+    DatabaseHandler db;
 
     public PhotosFragmentAll() {
 
@@ -43,7 +44,7 @@ public class PhotosFragmentAll extends Fragment implements Callback<List<Photo>>
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_photos, container, false);
-
+        db = new DatabaseHandler(getActivity());
         photos = new ArrayList<Photo>();
         photoAdapter = new PhotoAdapter(getActivity(), photos);
 
@@ -67,6 +68,9 @@ public class PhotosFragmentAll extends Fragment implements Callback<List<Photo>>
                 break;
             case Connectie.OFFLINE:
                 Toast.makeText(this.getActivity(), "Sorry we are offline", Toast.LENGTH_LONG).show();
+                List<Photo> pOff = db.getPhotosAll();
+                photos.addAll(pOff);
+                photoAdapter.notifyDataSetChanged();
         }
     }
 

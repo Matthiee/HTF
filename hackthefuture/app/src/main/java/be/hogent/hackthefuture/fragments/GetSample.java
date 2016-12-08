@@ -76,6 +76,9 @@ public class GetSample extends Fragment implements Callback<List<Sample>> {
                 break;
             case Connectie.OFFLINE:
                 Toast.makeText(this.getActivity(), "Sorry we are offline", Toast.LENGTH_LONG).show();
+                List<Sample> sam2 = db.getSamples(con.getName());
+                samples.addAll(sam2);
+                sampleAdapter.notifyDataSetChanged();
         }
     }
 

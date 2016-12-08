@@ -37,6 +37,7 @@ public class GetAllSamples extends Fragment implements Callback<List<Sample>> {
     SampleAdapter sampleAdapter;
     List<Sample> samples;
 
+
     public GetAllSamples() {
 
     }
@@ -76,6 +77,9 @@ public class GetAllSamples extends Fragment implements Callback<List<Sample>> {
                 break;
             case Connectie.OFFLINE:
                 Toast.makeText(this.getActivity(), "Sorry we are offline", Toast.LENGTH_LONG).show();
+                List<Sample> sam2 = db.getSamplesAll();
+                samples.addAll(sam2);
+                sampleAdapter.notifyDataSetChanged();
         }
     }
 
