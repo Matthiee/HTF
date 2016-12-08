@@ -1,8 +1,12 @@
 package be.hogent.hackthefuture.databank;
 
+import java.util.List;
+
+import be.hogent.hackthefuture.domein.Photo;
 import be.hogent.hackthefuture.domein.Researcher;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -16,5 +20,23 @@ public interface Service {
 
     @POST("researcher/startmission")
     Call<Researcher> startMission(@Body Researcher researcher);
+
+    @POST("photo")
+    Call<Photo> newPhoto(@Body Photo photo);
+
+    @GET("photos")
+    Call<List<Photo>> getPhotos();
+
+    @GET("photos/all")
+    Call<List<Photo>> getPhotosAll();
+
+    @POST("sample")
+    Call<List<Photo>> newSample();
+
+    @GET("samples")
+    Call<List<Photo>> getSamples();
+
+    @GET("samples/all")
+    Call<List<Photo>> getSamplesAll();
 
 }

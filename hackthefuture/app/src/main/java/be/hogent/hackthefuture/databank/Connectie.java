@@ -15,4 +15,10 @@ public class Connectie {
             .build();
 
     Service service = retrofit.create(Service.class);
+
+
+    public Service getService()
+    {
+        return service;
+    }
 }
