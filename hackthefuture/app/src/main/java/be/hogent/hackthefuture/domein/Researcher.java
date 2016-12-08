@@ -5,4 +5,16 @@ package be.hogent.hackthefuture.domein;
  */
 
 public class Researcher {
+
+    public String name, password;
+
+    public Researcher(){
+
+    }
+
+    public Researcher(String username, String password){
+        this.name=username;
+        this.password=password;
+    }
+
 }

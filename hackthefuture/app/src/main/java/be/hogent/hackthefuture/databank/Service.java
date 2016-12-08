@@ -4,6 +4,7 @@ import java.util.List;
 
 import be.hogent.hackthefuture.domein.Photo;
 import be.hogent.hackthefuture.domein.Researcher;
+import be.hogent.hackthefuture.domein.Token;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -16,10 +17,10 @@ import retrofit2.http.POST;
 public interface Service {
 
     @POST("researcher")
-    Call<Researcher> newResarcher(@Body Researcher researcher);
+    Call<Token> newResarcher(@Body Researcher researcher);
 
     @POST("researcher/startmission")
-    Call<Researcher> startMission(@Body Researcher researcher);
+    Call<Token> startMission(@Body Researcher researcher);
 
     @POST("photo")
     Call<Photo> newPhoto(@Body Photo photo);

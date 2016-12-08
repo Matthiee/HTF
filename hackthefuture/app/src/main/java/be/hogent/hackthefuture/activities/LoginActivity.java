@@ -1,52 +1,33 @@
 package be.hogent.hackthefuture.activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import be.hogent.hackthefuture.R;
-import be.hogent.hackthefuture.RegisterActivity;
-
-import static android.Manifest.permission.READ_CONTACTS;
+import be.hogent.hackthefuture.databank.Connectie;
+import be.hogent.hackthefuture.databank.Service;
+import be.hogent.hackthefuture.domein.Researcher;
+import be.hogent.hackthefuture.domein.Token;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements OnClickListener{
+public class LoginActivity extends AppCompatActivity implements OnClickListener, Callback<Token>{
 
+    private final static String TAG = "LoginActivity";
 
     private EditText username, password;
     private Button btnLogin;
@@ -86,10 +67,35 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
 
         if (!u.isEmpty() && !p.isEmpty()){
 
-            Toast.makeText(this, "Loging", Toast.LENGTH_SHORT).show();
+            Researcher researcher = new Researcher(u,p);
 
+            Service service = Connectie.createService(Service.class);
+            Call<Token> res = service.startMission(researcher);
+
+            res.enqueue(this);
         }
+    }
 
+    @Override
+    public void onResponse(Call<Token> call, Response<Token> response) {
+
+        Log.i(TAG, "code: " + response.code());
+        Log.i(TAG, "msg: " + response.message());
+
+        switch (response.code()){
+            case Connectie.CONTENT_CREATED:
+                String token = response.body().token;
+                Log.i(TAG, "token: " + token);
+                Connectie.token = token;
+                break;
+            default:
+                Toast.makeText(this, "wrong code", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onFailure(Call<Token> call, Throwable t) {
+        Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
     }
 }
 
