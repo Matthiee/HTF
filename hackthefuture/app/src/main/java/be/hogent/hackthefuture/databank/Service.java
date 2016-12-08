@@ -3,6 +3,7 @@ package be.hogent.hackthefuture.databank;
 import java.util.List;
 
 import be.hogent.hackthefuture.domein.Photo;
+import be.hogent.hackthefuture.domein.PostPhoto;
 import be.hogent.hackthefuture.domein.Researcher;
 import be.hogent.hackthefuture.domein.Token;
 import retrofit2.Call;
@@ -18,6 +19,9 @@ public interface Service {
 
     @POST("researcher")
     Call<Token> newResarcher(@Body Researcher researcher);
+
+    @POST("photo")
+    Call<PostPhoto> newPhoto(@Body PostPhoto photo);
 
     @POST("researcher/startmission")
     Call<Token> startMission(@Body Researcher researcher);

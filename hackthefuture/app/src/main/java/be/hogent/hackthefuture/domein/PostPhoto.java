@@ -1,5 +1,8 @@
 package be.hogent.hackthefuture.domein;
 
+import android.util.Log;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -15,7 +18,10 @@ public class PostPhoto {
 
         description=desc;
         base64imagedata=img;
-        datetime = new Date().toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd-hhmmss");
+        datetime = sdf.format(new Date());
+
+        Log.i("PostPhoto", datetime);
 
     }
 

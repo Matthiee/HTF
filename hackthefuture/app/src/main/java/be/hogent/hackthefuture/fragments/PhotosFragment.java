@@ -3,17 +3,20 @@ package be.hogent.hackthefuture.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,7 @@ import be.hogent.hackthefuture.databank.Connectie;
 import be.hogent.hackthefuture.databank.Service;
 import be.hogent.hackthefuture.domein.Photo;
 import be.hogent.hackthefuture.domein.PhotoAdapter;
+import be.hogent.hackthefuture.domein.PostPhoto;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +38,6 @@ public class PhotosFragment extends Fragment implements Callback<List<Photo>>, V
 
     PhotoAdapter photoAdapter;
     List<Photo> photos;
-    FloatingActionButton fab;
 
     public PhotosFragment() {
 
@@ -55,9 +58,6 @@ public class PhotosFragment extends Fragment implements Callback<List<Photo>>, V
         photos = new ArrayList<Photo>();
         photoAdapter = new PhotoAdapter(getActivity(), photos);
 
-        fab = (FloatingActionButton)v.findViewById(R.id.fab);
-
-        fab.setOnClickListener(this);
 
         Service service = Connectie.createService(Service.class, Connectie.token);
         service.getAllPhotos().enqueue(this);
@@ -79,11 +79,14 @@ public class PhotosFragment extends Fragment implements Callback<List<Photo>>, V
                 break;
             case Connectie.OFFLINE:
                 Toast.makeText(this.getActivity(), "Sorry we are offline", Toast.LENGTH_LONG).show();
+
         }
     }
 
     @Override
     public void onFailure(Call<List<Photo>> call, Throwable t) {
+        Log.i("photos", t.getMessage());
+        Log.e("photos", t.getMessage(), t);
         Toast.makeText(this.getActivity(), "Failure", Toast.LENGTH_SHORT).show();
     }
 
@@ -110,7 +113,32 @@ public class PhotosFragment extends Fragment implements Callback<List<Photo>>, V
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            //mImageView.setImageBitmap(imageBitmap);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] b = baos.toByteArray();
+
+            String p = Base64.encodeToString(b, Base64.DEFAULT);
+
+            Log.i("Photos", "base64: " + p);
+
+            PostPhoto foto = new PostPhoto("test", p);
+
+            Service service = Connectie.createService(Service.class, Connectie.token);
+            service.newPhoto(foto).enqueue(new Callback<PostPhoto>() {
+                @Override
+                public void onResponse(Call<PostPhoto> call, Response<PostPhoto> response) {
+                    Log.i("fragment", "code: "+response.code());
+                    Log.i("fragment", "msg: " + response.message());
+
+                    Toast.makeText(getActivity(), "Succes", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onFailure(Call<PostPhoto> call, Throwable t) {
+                    Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
+                }
+            });
         }
 
 

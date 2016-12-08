@@ -9,7 +9,9 @@ import java.util.Date;
 public class Photo {
 
     public String name, value, remark, researcher;
-    public Date date;
+    public String datetime;
+
+
 
     public Photo(){
 
