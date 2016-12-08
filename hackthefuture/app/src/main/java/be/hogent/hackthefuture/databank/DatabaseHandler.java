@@ -2,8 +2,12 @@ package be.hogent.hackthefuture.databank;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import be.hogent.hackthefuture.domein.Photo;
 import be.hogent.hackthefuture.domein.Sample;
@@ -73,7 +77,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PHOTOS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SAMPLES);
 
-        // Create tables again
         onCreate(db);
     }
 
@@ -87,9 +90,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PHOTOS_DATETIME, ph.getDatetime());
         values.put(KEY_PHOTOS_RESEARCHER, ph.getResearcher());
 
-        // Inserting Row
         db.insert(TABLE_PHOTOS, null, values);
-        db.close(); // Closing database connection
+        db.close();
     }
 
     public void addSample(Sample sam) {
@@ -102,8 +104,53 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_SAMPLES_DATETIME, sam.getDatetime());
         values.put(KEY_SAMPLES_RESEARCHER, sam.getResearcher());
 
-        // Inserting Row
         db.insert(TABLE_SAMPLES, null, values);
-        db.close(); // Closing database connection
+        db.close();
+    }
+
+    public List<Photo> getPhotos()
+    {
+        List<Photo> photos = new ArrayList<Photo>();
+        String selectQuery = "SELECT  * FROM " + TABLE_PHOTOS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Photo ph = new Photo();
+                ph.setName(cursor.getString(1));
+                ph.setValue(cursor.getString(2));
+                ph.setRemark(cursor.getString(2));
+                ph.setDatetime(cursor.getString(2));
+                ph.setResearcher(cursor.getString(2));
+
+                photos.add(ph);
+            } while (cursor.moveToNext());
+        }
+        return photos;
+    }
+
+    public List<Sample> getSamples()
+    {
+        List<Sample> samples = new ArrayList<Sample>();
+        String selectQuery = "SELECT  * FROM " + TABLE_SAMPLES;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Sample sam = new Sample();
+                sam.setName(cursor.getString(1));
+                sam.setValue(cursor.getString(2));
+                sam.setRemark(cursor.getString(2));
+                sam.setDatetime(cursor.getString(2));
+                sam.setResearcher(cursor.getString(2));
+
+                samples.add(sam);
+            } while (cursor.moveToNext());
+        }
+        return samples;
     }
 }
