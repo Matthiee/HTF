@@ -108,7 +108,53 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<Photo> getPhotos()
+    public List<Photo> getPhotos(String res)
+    {
+        List<Photo> photos = new ArrayList<Photo>();
+        String selectQuery = "SELECT  * FROM " + TABLE_PHOTOS + " WHERE " +KEY_PHOTOS_RESEARCHER + " = "+res;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Photo ph = new Photo();
+                ph.setName(cursor.getString(1));
+                ph.setValue(cursor.getString(2));
+                ph.setRemark(cursor.getString(2));
+                ph.setDatetime(cursor.getString(2));
+                ph.setResearcher(cursor.getString(2));
+
+                photos.add(ph);
+            } while (cursor.moveToNext());
+        }
+        return photos;
+    }
+
+    public List<Sample> getSamples(String res)
+    {
+        List<Sample> samples = new ArrayList<Sample>();
+        String selectQuery = "SELECT  * FROM " + TABLE_SAMPLES + " WHERE " +KEY_SAMPLES_RESEARCHER + " = "+res;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Sample sam = new Sample();
+                sam.setName(cursor.getString(1));
+                sam.setValue(cursor.getString(2));
+                sam.setRemark(cursor.getString(2));
+                sam.setDatetime(cursor.getString(2));
+                sam.setResearcher(cursor.getString(2));
+
+                samples.add(sam);
+            } while (cursor.moveToNext());
+        }
+        return samples;
+    }
+
+    public List<Photo> getPhotosAll()
     {
         List<Photo> photos = new ArrayList<Photo>();
         String selectQuery = "SELECT  * FROM " + TABLE_PHOTOS;
@@ -131,7 +177,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return photos;
     }
 
-    public List<Sample> getSamples()
+    public List<Sample> getSamplesAll()
     {
         List<Sample> samples = new ArrayList<Sample>();
         String selectQuery = "SELECT  * FROM " + TABLE_SAMPLES;

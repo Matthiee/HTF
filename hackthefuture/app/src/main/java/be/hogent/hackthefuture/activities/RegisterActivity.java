@@ -68,8 +68,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             Researcher researcher = new Researcher(u, p);
 
-             Call<Token> req = service.newResarcher(researcher);
+            Call<Token> req = service.newResarcher(researcher);
             req.enqueue(this);
+
 
             Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
 
