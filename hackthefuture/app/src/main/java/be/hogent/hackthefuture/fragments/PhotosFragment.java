@@ -48,7 +48,7 @@ public class PhotosFragment extends Fragment implements Callback<List<Photo>> {
         photoAdapter = new PhotoAdapter(getActivity(), photos);
 
         Service service = Connectie.createService(Service.class, Connectie.token);
-        service.getAllPhotos().enqueue(this);
+        service.getPhotosAll().enqueue(this);
 
         return v;
     }

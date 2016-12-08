@@ -43,11 +43,11 @@ public class PhotoAdapter extends ArrayAdapter<Photo> {
         TextView txtAuthor = (TextView)row.findViewById(R.id.txtAuthor);
         TextView txtDesc = (TextView)row.findViewById(R.id.txtDescription);
 
-        txtNaam.setText(p.name);
-        txtAuthor.setText(p.researcher);
-        txtDesc.setText(p.remark);
+        txtNaam.setText(p.getName());
+        txtAuthor.setText(p.getResearcher());
+        txtDesc.setText(p.getRemark());
 
-        byte[] decodedString = Base64.decode(p.value, Base64.URL_SAFE);
+        byte[] decodedString = Base64.decode(p.getValue(), Base64.URL_SAFE);
         Bitmap decodedImg = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
         img.setImageBitmap(decodedImg);
