@@ -24,5 +24,6 @@
     <string name="postSample_Remark">Remark:</string>
     <string name="postSample_Date">Date:</string>
     <string name="postSample_Button">Add Sample</string>
+    <string name="postSample_Researcher">Researcher:</string>
 
 </resources>
