@@ -1,9 +1,13 @@
 package be.hogent.hackthefuture.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +26,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotosFragment extends Fragment implements Callback<List<Photo>> {
+import static android.app.Activity.RESULT_OK;
+
+public class PhotosFragment extends Fragment implements Callback<List<Photo>>, View.OnClickListener{
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     PhotoAdapter photoAdapter;
     List<Photo> photos;
-
+    FloatingActionButton fab;
 
     public PhotosFragment() {
 
@@ -46,6 +54,10 @@ public class PhotosFragment extends Fragment implements Callback<List<Photo>> {
 
         photos = new ArrayList<Photo>();
         photoAdapter = new PhotoAdapter(getActivity(), photos);
+
+        fab = (FloatingActionButton)v.findViewById(R.id.fab);
+
+        fab.setOnClickListener(this);
 
         Service service = Connectie.createService(Service.class, Connectie.token);
         service.getAllPhotos().enqueue(this);
@@ -73,5 +85,34 @@ public class PhotosFragment extends Fragment implements Callback<List<Photo>> {
     @Override
     public void onFailure(Call<List<Photo>> call, Throwable t) {
         Toast.makeText(this.getActivity(), "Failure", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId()==R.id.fab){
+
+
+
+        }
+    }
+
+    private void takePic(){
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            //mImageView.setImageBitmap(imageBitmap);
+        }
+
+
     }
 }
