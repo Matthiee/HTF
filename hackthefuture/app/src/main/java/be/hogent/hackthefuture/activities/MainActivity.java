@@ -1,7 +1,9 @@
-package be.hogent.hackthefuture;
+package be.hogent.hackthefuture.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import be.hogent.hackthefuture.R;
 
 public class MainActivity extends AppCompatActivity {
 
