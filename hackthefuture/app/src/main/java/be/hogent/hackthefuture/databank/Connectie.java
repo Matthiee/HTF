@@ -19,6 +19,7 @@ public class Connectie {
     public static String name = "";
 
     public final static int CONTENT_CREATED = 201;
+    public final static int OK = 200;
     public final static int BAD_REQ = 400;
     public final static int UNAUTHORIZED = 401;
     public final static int OFFLINE = 503;
