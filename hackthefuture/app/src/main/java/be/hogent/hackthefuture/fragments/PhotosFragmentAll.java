@@ -22,13 +22,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotosFragment extends Fragment implements Callback<List<Photo>> {
+public class PhotosFragmentAll extends Fragment implements Callback<List<Photo>> {
 
     PhotoAdapter photoAdapter;
     List<Photo> photos;
 
 
-    public PhotosFragment() {
+    public PhotosFragmentAll() {
 
     }
 
@@ -48,7 +48,7 @@ public class PhotosFragment extends Fragment implements Callback<List<Photo>> {
         photoAdapter = new PhotoAdapter(getActivity(), photos);
 
         Service service = Connectie.createService(Service.class, Connectie.token);
-        service.getPhotos().enqueue(this);
+        service.getPhotosAll().enqueue(this);
 
         return v;
     }
