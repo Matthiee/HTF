@@ -88,6 +88,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String token = response.body().token;
                 Log.i(TAG, "token: " + token);
                 Connectie.token = token;
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
                 break;
             case Connectie.ALREADY_ON_MISSION:
                 Toast.makeText(this, "gebruiker bestaat al", Toast.LENGTH_SHORT).show();
