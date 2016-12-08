@@ -87,6 +87,8 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 String token = response.body().token;
                 Log.i(TAG, "token: " + token);
                 Connectie.token = token;
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
                 break;
             default:
                 Toast.makeText(this, "wrong code", Toast.LENGTH_SHORT).show();
