@@ -1,4 +1,4 @@
-package be.hogent.hackthefuture;
+package be.hogent.hackthefuture.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import be.hogent.hackthefuture.R;
+import be.hogent.hackthefuture.activities.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 

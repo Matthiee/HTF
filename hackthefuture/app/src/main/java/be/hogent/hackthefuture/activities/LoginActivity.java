@@ -1,4 +1,4 @@
-package be.hogent.hackthefuture;
+package be.hogent.hackthefuture.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -36,6 +36,9 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import be.hogent.hackthefuture.R;
+import be.hogent.hackthefuture.RegisterActivity;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
