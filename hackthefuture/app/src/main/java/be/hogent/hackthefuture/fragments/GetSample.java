@@ -31,7 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class GetSample extends Fragment implements Callback<List<Sample>> {
+public class GetSample extends Fragment{
 
     DatabaseHandler db;
     Connectie con;
@@ -54,39 +54,15 @@ public class GetSample extends Fragment implements Callback<List<Sample>> {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_get_sample, container, false);
 
-        samples = new ArrayList<Sample>();
+        samples = db.getSamples(con.getName());
         sampleAdapter = new SampleAdapter(getActivity(), samples);
 
-        Service service = Connectie.createService(Service.class, Connectie.token);
-        service.getSamples().enqueue(this);
+
 
         return v;
     }
 
-    @Override
-    public void onResponse(Call<List<Sample>> call, Response<List<Sample>> response) {
-        Log.i("Samples", "code: " + response.code());
 
-        switch (response.code()) {
-            case Connectie.OK:
-
-                List<Sample> sam = response.body();
-                samples.addAll(sam);
-                sampleAdapter.notifyDataSetChanged();
-
-                break;
-            case Connectie.OFFLINE:
-                Toast.makeText(this.getActivity(), "Sorry we are offline", Toast.LENGTH_LONG).show();
-                List<Sample> sam2 = db.getSamples(con.getName());
-                samples.addAll(sam2);
-                sampleAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void onFailure(Call<List<Sample>> call, Throwable t) {
-        Toast.makeText(this.getActivity(), "Failure", Toast.LENGTH_SHORT).show();
-    }
 
     public void add() {
         getFragmentManager().beginTransaction().replace(R.id.main_content, new PostSample()).commit();

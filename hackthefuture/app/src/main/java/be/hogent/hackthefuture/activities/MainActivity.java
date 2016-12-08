@@ -12,10 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import be.hogent.hackthefuture.R;
 import be.hogent.hackthefuture.fragments.GetAllSamples;
+import be.hogent.hackthefuture.fragments.GetSample;
 import be.hogent.hackthefuture.fragments.PhotosFragment;
+import be.hogent.hackthefuture.fragments.PhotosFragmentAll;
+import be.hogent.hackthefuture.fragments.PostSample;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,6 +28,39 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button btnyourSamples = (Button) findViewById(R.id.seeYourSamples);
+        btnyourSamples.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction().replace(R.id.main_content, new GetSample()).commit();
+            }
+        });
+
+        Button btnEverySa = (Button) findViewById(R.id.seeEveryoneSamples);
+        btnyourSamples.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction().replace(R.id.main_content, new GetAllSamples()).commit();
+            }
+        });
+
+        Button btnyourPh = (Button) findViewById(R.id.seeYourPhotos);
+        btnyourSamples.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction().replace(R.id.main_content, new PhotosFragment()).commit();
+            }
+        });
+
+        Button btnEvPh = (Button) findViewById(R.id.seeEveryonePhotos);
+        btnyourSamples.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction().replace(R.id.main_content, new PhotosFragmentAll()).commit();
+            }
+        });
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -45,8 +82,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        GetAllSamples sampleFrag = new GetAllSamples();
-        getFragmentManager().beginTransaction().replace(R.id.main_content, sampleFrag).commit();
+
     }
 
     @Override
@@ -94,5 +130,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void seeYourSamples()
+    {
+        getFragmentManager().beginTransaction().replace(R.id.main_content, new GetSample()).commit();
     }
 }

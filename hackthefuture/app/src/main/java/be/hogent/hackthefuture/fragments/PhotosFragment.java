@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotosFragment extends Fragment implements Callback<List<Photo>> {
+public class PhotosFragment extends Fragment  {
 
     PhotoAdapter photoAdapter;
     List<Photo> photos;
@@ -48,37 +48,12 @@ public class PhotosFragment extends Fragment implements Callback<List<Photo>> {
         View v = inflater.inflate(R.layout.fragment_photos, container, false);
         db = new DatabaseHandler(getActivity());
         con = new Connectie();
-        photos = new ArrayList<Photo>();
+        photos = db.getPhotos(con.getName());
         photoAdapter = new PhotoAdapter(getActivity(), photos);
 
-        Service service = Connectie.createService(Service.class, Connectie.token);
-        service.getPhotos().enqueue(this);
+
 
         return v;
     }
 
-    @Override
-    public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
-        Log.i("Photos", "code: " + response.code());
-
-        switch (response.code()){
-            case Connectie.OK:
-
-                List<Photo> ps = response.body();
-                photos.addAll(ps);
-                photoAdapter.notifyDataSetChanged();
-
-                break;
-            case Connectie.OFFLINE:
-                Toast.makeText(this.getActivity(), "Sorry we are offline", Toast.LENGTH_LONG).show();
-                List<Photo> pOff = db.getPhotos(con.getName());
-                photos.addAll(pOff);
-                photoAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void onFailure(Call<List<Photo>> call, Throwable t) {
-        Toast.makeText(this.getActivity(), "Failure", Toast.LENGTH_SHORT).show();
-    }
 }
