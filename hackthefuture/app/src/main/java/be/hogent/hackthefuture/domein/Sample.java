@@ -3,6 +3,8 @@
 package be.hogent.hackthefuture.domein;
 
 
+import retrofit2.Callback;
+
 public class Sample {
 
     private String name;

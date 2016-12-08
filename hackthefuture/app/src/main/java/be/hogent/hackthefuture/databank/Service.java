@@ -33,7 +33,7 @@ public interface Service {
     Call<List<Photo>> getPhotosAll();
 
     @POST("sample")
-    Call<List<Sample>> newSample();
+    Call<Sample> newSample(@Body Sample sam);
 
     @GET("samples")
     Call<List<Sample>> getSamples();
