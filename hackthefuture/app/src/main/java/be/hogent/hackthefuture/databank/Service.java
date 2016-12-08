@@ -30,4 +30,13 @@ public interface Service {
     @GET("photos/all")
     Call<List<Photo>> getPhotosAll();
 
+    @POST("sample")
+    Call<List<Photo>> newSample();
+
+    @GET("samples")
+    Call<List<Photo>> getSamples();
+
+    @GET("samples/all")
+    Call<List<Photo>> getSamplesAll();
+
 }
