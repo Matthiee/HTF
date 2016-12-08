@@ -3,7 +3,9 @@
 package be.hogent.hackthefuture.domein;
 
 
-public class Photo {
+import retrofit2.Callback;
+
+public class Sample {
 
     private String name;
     private String value;
@@ -12,11 +14,11 @@ public class Photo {
     private String researcher;
 
 
-    public Photo() {
+    public Sample() {
     }
 
 
-    public Photo(String name, String value, String remark, String datetime, String researcher) {
+    public Sample(String name, String value, String remark, String datetime, String researcher) {
         super();
         this.name = name;
         this.value = value;

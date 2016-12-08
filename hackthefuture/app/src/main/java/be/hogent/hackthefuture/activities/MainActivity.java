@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import be.hogent.hackthefuture.R;
+import be.hogent.hackthefuture.fragments.GetAllSamples;
 import be.hogent.hackthefuture.fragments.PhotosFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -51,8 +52,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        getFragmentManager().beginTransaction().replace(R.id.main_content, photosFragment).commit();
+        GetAllSamples sampleFrag = new GetAllSamples();
+        getFragmentManager().beginTransaction().replace(R.id.main_content, sampleFrag).commit();
     }
 
     @Override

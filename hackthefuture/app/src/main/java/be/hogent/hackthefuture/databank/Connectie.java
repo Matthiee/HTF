@@ -16,6 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Connectie {
 
     public static String token = "";
+    public static String name = "";
 
     public final static int CONTENT_CREATED = 201;
     public final static int OK = 200;
@@ -58,6 +59,11 @@ public class Connectie {
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = builder.client(client).build();
         return retrofit.create(serviceClass);
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
 }

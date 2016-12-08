@@ -5,6 +5,7 @@ import java.util.List;
 import be.hogent.hackthefuture.domein.Photo;
 import be.hogent.hackthefuture.domein.PostPhoto;
 import be.hogent.hackthefuture.domein.Researcher;
+import be.hogent.hackthefuture.domein.Sample;
 import be.hogent.hackthefuture.domein.Token;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -26,7 +27,22 @@ public interface Service {
     @POST("researcher/startmission")
     Call<Token> startMission(@Body Researcher researcher);
 
+    @POST("photo")
+    Call<Photo> newPhoto(@Body Photo photo);
+
+    @GET("photos")
+    Call<List<Photo>> getPhotos();
+
     @GET("photos/all")
-    Call<List<Photo>> getAllPhotos();
+    Call<List<Photo>> getPhotosAll();
+
+    @POST("sample")
+    Call<Sample> newSample(@Body Sample sam);
+
+    @GET("samples")
+    Call<List<Sample>> getSamples();
+
+    @GET("samples/all")
+    Call<List<Sample>> getSamplesAll();
 
 }

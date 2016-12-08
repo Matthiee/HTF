@@ -25,4 +25,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+
+    <!-- Strings related to PostSample -->
+    <string name="postSample_Name">Name:</string>
+    <string name="postSample_Value">Value:</string>
+    <string name="postSample_Remark">Remark:</string>
+    <string name="postSample_Date">Date:</string>
+    <string name="postSample_Button">Add Sample</string>
+    <string name="postSample_Researcher">Researcher:</string>
 </resources>
